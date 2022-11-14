@@ -1,0 +1,17 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/src
+    ports:
+      - 8000:8000
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/src
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    tty: true # docker-compose up した後Exitしないように一旦
