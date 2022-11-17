@@ -14,4 +14,4 @@ services:
       - backend
     ports:
       - 3000:3000
-    tty: true # docker-compose up した後Exitしないように一旦
+    tty: true

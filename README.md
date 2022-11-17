@@ -1,11 +1,11 @@
 ## docker-compose up
 
 ```
-docker-compose up
+docker-compose up --build
 ```
 
 ```
-docker exec -it minoka_apps_frontend_1 sh
+docker exec -it minoka_apps_frontend_1 bash
 ```
 
 ```
