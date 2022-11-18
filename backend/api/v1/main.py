@@ -1,6 +1,23 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
+from starlette.requests import Request
+from sqlalchemy.orm import Session, sessionmaker
+from .db import Girls, engine
+from sqlalchemy import *
+
+# DB接続用のセッションクラス インスタンスが作成されると接続する
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+# DB接続のセッションを各エンドポイントの関数に渡す
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 
 app = FastAPI()
 
@@ -19,9 +36,11 @@ class TestParam(BaseModel):
 
 
 @app.get("/")
-def read_root():
-    print('OK')
-    return {"Hello", "World"}
+def read_root(db: Session = Depends(get_db)):
+    girls = db.query(Girls).all()
+    print(girls)
+
+    return girls
 
 
 @app.post("/")

@@ -2,6 +2,8 @@ FROM python:3.9
 
 WORKDIR /src
 
+RUN apt-get update
+RUN apt-get install -y sqlite3
 RUN pip install poetry 
 COPY . /src
 COPY pyproject.toml* ./ 
