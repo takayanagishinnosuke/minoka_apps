@@ -24,10 +24,20 @@ Base = declarative_base()
 # Girlsテーブルの定義
 class Girls(Base):
     __tablename__ = 'girls'
-    id = Column('id', Integer, primary_key=True)
-    title = Column('title', String(200))
+    id = Column('id', Integer, primary_key=True, autoincrement=True)
     name = Column('name', String(100))
-
+    age = Column('age', String(10))
+    height = Column('height', String(10))
+    bust = Column('bust', String(10))
+    size = Column('size', String(10))
+    west = Column('west', String(10))
+    hip = Column('hip', String(10))
+    comment = Column('comment', String(200))
+    county = Column('county', String(50))
+    store= Column('store', String(100))
+    storeType = Column('storeType', String(100))
+    imgUrl = Column('imgUrl', String(300))
+    
 
 if __name__ == "__main__":
     # テーブル作成

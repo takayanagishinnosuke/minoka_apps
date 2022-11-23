@@ -37,10 +37,17 @@ class TestParam(BaseModel):
 
 @app.get("/")
 def read_root(db: Session = Depends(get_db)):
-    girls = db.query(Girls).all()
-    print(girls)
+    # girls = db.query(Girls).all()
+    # print(girls)
 
-    return girls
+    return 'top', 'hellow'
+
+
+# ガールズテーブルのcuntryにある都道府県で重複排除して渡す
+@app.get("/serch")
+def read_root(db: Session = Depends(get_db)):
+    country = db.query(Girls.county).distinct().limit(48).all()
+    return country
 
 
 @app.post("/")

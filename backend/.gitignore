@@ -1,1 +1,6 @@
 __pycache__
+backend/api/v1/__pycache__/
+api/v1/db_append.py
+api/v1/gals_database.csv
+
+
