@@ -56,7 +56,7 @@ def read_root(db: Session = Depends(get_db)):
     return country
 
 
-# 都道府県が一致したstoreの名前を返す
+# 都道府県が一致した店舗の名前を返す
 @app.get("/serchshop/{country}")
 def read_root(country, db: Session = Depends(get_db)):
     store = db.query(Girls.store).filter(
@@ -64,10 +64,10 @@ def read_root(country, db: Session = Depends(get_db)):
     return store
 
 
-# 店名検索用のエンドポイント
+# ガール検索用のエンドポイント
 @app.get("/serchgirl/{store}")
 def read_root(store, db: Session = Depends(get_db)):
-    girl = db.query(Girls.id, Girls.name).filter(
+    girl = db.query(Girls.id, Girls.name, Girls.imgUrl).filter(
         Girls.store == store).distinct().limit(200).all()
     return girl
 

@@ -15,7 +15,7 @@ export const ApiSample = () => {
 
   //ガールズデータの取得用
   const [Girls, SetGirls] = useState([])
-  //ガールズバリューにはGIDを格納する
+  //ガールズバリューにはGIDと画像のURLを格納する
   const [GirlValue, SetGirlValue] = useState(null)
 
   //愛嬌スコアの格納
@@ -83,7 +83,7 @@ export const ApiSample = () => {
         axios.get(EndPoint + "serchgirl/" + StoreValue ,{
         }).then(res=>{
           // console.log(res)
-          SetGirls(res.data.map((data) => ({id:data.id,name:data.name})))
+          SetGirls(res.data.map((data) => ({id:data.id, name:data.name, url:data.imgUrl})))
         }).catch(err=>{
           console.log(err);
         });
@@ -95,8 +95,13 @@ export const ApiSample = () => {
 
   //女子名が選択され変化があれば、女子のIDを取得して格納
   const GirlChange = (e) =>{
-    // console.log(e.target.value)
-    SetGirlValue(e.target.value)
+    //「選択してください」を選んでいるときはnullに戻す
+    if(e.target.value === '0'){
+      SetGirlValue(null)
+    }else{
+      let url = e.target[e.target.selectedIndex].getAttribute('data-address')
+      SetGirlValue({id:e.target.value, url:url})
+    }
   }
 
   //愛嬌選択の変化があったら、格納
@@ -123,7 +128,7 @@ export const ApiSample = () => {
       //エラーがなければ登録処理が走ります
     }else{
       axios.post(EndPoint + "postreport" ,{
-        gid: GirlValue,
+        gid: Number(GirlValue.id),
         charm: CharmScore,
         ex: ExpertScore,
         repo: Report.current.value,
@@ -131,6 +136,7 @@ export const ApiSample = () => {
       }).then(res=>{
         //登録完了した場合は投稿内容+「登録完了しました」が返ります。
         console.log(res)
+        // window.location.reload()
       }).catch(err=>{
         //サーバー側で何らかのエラーがあった場合はエラーを返します。
         console.log(err)
@@ -138,8 +144,6 @@ export const ApiSample = () => {
     };
   };
   
-
-
   return (
     <>
     <h1>検索と投稿の非同期処理APIテスト</h1>
@@ -168,10 +172,10 @@ export const ApiSample = () => {
     <div>
       <label>女の子名</label>
       <select onChange={(e) => GirlChange(e)}>
-        <option>選択してください</option>
+        <option value={0} data-address={null}>選択してください</option>
         {Girls.map((girl) =>{
           return(
-            <option key={girl.id} value={girl.id}>
+            <option key={girl.id} value={girl.id} data-address={girl.url}>
               {girl.name}
             </option>
           )
@@ -179,6 +183,13 @@ export const ApiSample = () => {
       </select>
     </div>
     
+    <div>
+    {GirlValue 
+      ? <img src={GirlValue.url} width={150} height={150}></img>
+      : <></> 
+    }
+    </div>
+
     <br></br>
     <div>
       <label>愛嬌</label>
