@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./sql.db"
 
-# sqlalchemyのengine作成する
+# sqlalchemyのエンジンを作成する
 # connect_args={"check_same_thread": False}
 # ↑はSQLiteだから必要。他のデータベースには必要ない。同時接続の許可
 engine = create_engine(
@@ -16,8 +16,8 @@ engine = create_engine(
 # sessionmakerを使用
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base暮らすを作成
-# 後でこのクラスを継承して各DB，モデル, クラスを作成する
+# Baseクラスを作成
+# ↓でこのクラスを継承して各DB，モデル, クラスを作成する
 Base = declarative_base()
 
 
@@ -34,10 +34,20 @@ class Girls(Base):
     hip = Column('hip', String(10))
     comment = Column('comment', String(200))
     county = Column('county', String(50))
-    store= Column('store', String(100))
+    store = Column('store', String(100))
     storeType = Column('storeType', String(100))
     imgUrl = Column('imgUrl', String(300))
-    
+
+
+class Reports(Base):
+    __tablename__ = 'reports'
+    id = Column('id', Integer, primary_key=True, autoincrement=True)
+    GirlId = Column('GirlId', Integer)
+    CharmScore = Column('CharmScore', Integer)
+    ExpertScore = Column('ExpertScore', Integer)
+    Report = Column('Report', String(500))
+    PostUserId = Column('PostUserId', String(100))
+
 
 if __name__ == "__main__":
     # テーブル作成
