@@ -10,5 +10,6 @@ COPY pyproject.toml* ./
 COPY poetry.lock* ./
 RUN poetry config virtualenvs.in-project true
 RUN poetry install
+RUN poetry update
 
 ENTRYPOINT ["poetry","run","uvicorn","api.v1.main:app","--host","0.0.0.0","--reload"]
