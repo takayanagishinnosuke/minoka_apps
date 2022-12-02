@@ -52,23 +52,23 @@ def read_root(db: Session = Depends(get_db)):
 # ガールズテーブルのcuntryにある都道府県で重複排除して渡す
 @app.get("/serchcountry")
 def read_root(db: Session = Depends(get_db)):
-    country = db.query(Girls.county).distinct().limit(48).all()
+    country = db.query(Girls.Country).distinct().limit(48).all()
     return country
 
 
 # 都道府県が一致した店舗の名前を返す
 @app.get("/serchshop/{country}")
 def read_root(country, db: Session = Depends(get_db)):
-    store = db.query(Girls.store).filter(
-        Girls.county == country).distinct().limit(100).all()
+    store = db.query(Girls.Store).filter(
+        Girls.Country == country).distinct().limit(100).all()
     return store
 
 
 # ガール検索用のエンドポイント
 @app.get("/serchgirl/{store}")
 def read_root(store, db: Session = Depends(get_db)):
-    girl = db.query(Girls.id, Girls.name, Girls.imgUrl).filter(
-        Girls.store == store).distinct().limit(200).all()
+    girl = db.query(Girls.id, Girls.Name, Girls.imgUrl).filter(
+        Girls.Store == store).distinct().limit(100).all()
     return girl
 
 

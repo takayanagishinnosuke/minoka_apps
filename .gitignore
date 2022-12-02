@@ -1,0 +1,6 @@
+__pycache__/
+backend/api/v1/__pycache__/
+girls_actors_img/
+girls_img/
+frontend/public/girls_img/
+

@@ -5,13 +5,15 @@ import axios from "axios"
 
 export const ApiSample = () => {
 
+  const [FirstValue, SetFirstValue] = useState(false)
+
   //都道府県データの取得用
   const [Country, SetCountry] = useState([])
-  const [CountryValue, SetCountryValue] = useState("千葉")
+  const [CountryValue, SetCountryValue] = useState("")
 
   //店名データの取得用
   const [Store, SetStore] = useState([])
-  const [StoreValue, SetStoreValue] = useState("ラブライブ")
+  const [StoreValue, SetStoreValue] = useState("")
 
   //ガールズデータの取得用
   const [Girls, SetGirls] = useState([])
@@ -32,20 +34,25 @@ export const ApiSample = () => {
 
   //初期ロード時に発火
   useEffect(() =>{
+    SetFirstValue(true) 
+  },[])
+
+  //ファーストバリューがTrueになったら発火
+  useEffect(() =>{
     //DBに登録がある都道府県を取得
     const SerchCountry = () =>{
       axios.get(EndPoint + "serchcountry" ,{
       }).then(res=>{
         //返ってきたら取得用のステートにセットしていく
-        // console.log(res)
-        SetCountry(res.data.map((data) => ([data.county])))
+        console.log(res)
+        SetCountry(res.data.map((data) => ([data.Country])))
       }).catch(err=>{
         console.log(err);
       });
     };
     //関数の呼び出し
     SerchCountry()
-  },[]);
+  },[FirstValue]);
   
   //都道府県の選択が変更されたら現在の値を取得して状態変数を更新する
   const contryChange = (e) =>{
@@ -60,7 +67,7 @@ export const ApiSample = () => {
         axios.get(EndPoint + "serchshop/" + CountryValue ,{
         }).then(res=>{
           // console.log(res)
-          SetStore(res.data.map((data) => ([data.store])))
+          SetStore(res.data.map((data) => ([data.Store])))
         }).catch(err=>{
           console.log(err);
         });
@@ -82,8 +89,8 @@ export const ApiSample = () => {
       const SerchGirl = () =>{
         axios.get(EndPoint + "serchgirl/" + StoreValue ,{
         }).then(res=>{
-          // console.log(res)
-          SetGirls(res.data.map((data) => ({id:data.id, name:data.name, url:data.imgUrl})))
+          console.log(res)
+          SetGirls(res.data.map((data) => ({id:data.id, name:data.Name, url:data.imgUrl})))
         }).catch(err=>{
           console.log(err);
         });
@@ -135,8 +142,9 @@ export const ApiSample = () => {
         uid: "1dbaea"
       }).then(res=>{
         //登録完了した場合は投稿内容+「登録完了しました」が返ります。
-        console.log(res)
-        // window.location.reload()
+        // console.log(res)
+        alert("レポートを登録しました")
+        window.location.reload()
       }).catch(err=>{
         //サーバー側で何らかのエラーがあった場合はエラーを返します。
         console.log(err)
@@ -146,10 +154,11 @@ export const ApiSample = () => {
   
   return (
     <>
-    <h1>検索と投稿の非同期処理APIテスト</h1>
+    <h1>レポート投稿</h1>
     <div>
         <label>都道府県</label>
         <select onChange={(e) => contryChange(e)}>
+        <option value={0} data-address={null}>選択してください</option>
         {Country.map((country) =>{
           return(
             <option key={country}>{country}</option>
@@ -161,6 +170,7 @@ export const ApiSample = () => {
     <div>
       <label>店名</label>
       <select onChange={(e) => StoreChange(e)}>
+      <option value={0} data-address={null}>選択してください</option>
         {Store.map((store) =>{
           return(
             <option key={store}>{store}</option>

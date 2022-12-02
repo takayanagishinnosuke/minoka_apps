@@ -11,6 +11,7 @@ fastapi = "^0.87.0"
 uvicorn = {extras = ["standard"], version = "^0.19.0"}
 sqlalchemy = "^1.4.44"
 pandas = "^1.5.1"
+opencv-contrib-python = "^4.6.0.66"
 
 
 [build-system]
