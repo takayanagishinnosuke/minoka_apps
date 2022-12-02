@@ -31,6 +31,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+#--ここから型クラス定義-----
 
 # レポート登録用のクラス
 class ReportParam(BaseModel):
@@ -40,6 +41,11 @@ class ReportParam(BaseModel):
     repo: str
     uid: str
 
+# uid受け取り用定義
+class useridParam(BaseModel):
+    uid: str
+
+#---------------------------
 
 @app.get("/")
 def read_root(db: Session = Depends(get_db)):
@@ -48,6 +54,11 @@ def read_root(db: Session = Depends(get_db)):
 
     return '正しくサーバーサイドと通信できてます'
 
+@app.post("/postid")
+def read_root(uid: useridParam, db: Session = Depends(get_db)):
+    print(uid.uid)
+    #ユーザーIDからよく投稿している嬢の最頻IDを取得する
+    return uid
 
 # ガールズテーブルのcuntryにある都道府県で重複排除して渡す
 @app.get("/serchcountry")

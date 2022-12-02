@@ -1,9 +1,10 @@
 // このコンポーネントの目的は検索と投稿のAPIサンプルです
 import React, { useEffect, useRef, useState } from 'react'
 import axios from "axios"
+import { ServerUrl } from './Api'
 
 
-export const ApiSample = () => {
+export const RepoApi = () => {
 
   const [FirstValue, SetFirstValue] = useState(false)
 
@@ -30,7 +31,7 @@ export const ApiSample = () => {
   const Report = useRef(null)
 
   //サーバーサイドのエンドポイント
-  const EndPoint = "http://localhost:8000/"
+  const EndPoint = ServerUrl
 
   //初期ロード時に発火
   useEffect(() =>{

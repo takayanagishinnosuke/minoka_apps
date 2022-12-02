@@ -1,0 +1,258 @@
+/* リセットCSS */
+
+@charset "UTF-8";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+margin: 0;
+padding: 0;
+border: none;
+font-style: normal;
+text-align: left;
+zoom: 1;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+display: block;
+}
+table {
+border-collapse: collapse;
+font-family: inherit;
+}
+h1,h2,h3,h4,h5 {
+font-size: 100%;
+font-weight: normal;
+line-height: 1;
+}
+input,textarea,select {
+font-family: inherit;
+font-size: 16px;
+}
+input[type="button"],input[type="text"],input[type="submit"] {
+-webkit-appearance: none;
+border-radius: 0;
+}
+textarea {
+resize: none;
+-webkit-appearance: none;
+border-radius: 0;
+}
+th,td {
+border-collapse: collapse;
+}
+table th,table td {
+white-space: nowrap;
+}
+ul,ol {
+list-style-type: none;
+}
+img {
+vertical-align: text-bottom;
+vertical-align: -webkit-baseline-middle;
+max-width: 100%;
+height: auto;
+width /***/:auto;
+}
+
+
+
+
+
+ /* CSS本文 */
+
+
+
+
+
+html{
+  background-color: #dcdcdc;
+  
+}
+
+
+header{
+    width: 100%;
+    height: 100px;
+    background-color: #646ccc;
+}
+
+.body{
+  position: relative; 
+  width: 100%;
+    height: 100%;
+}
+
+
+
+
+.login{
+  float: right;
+}
+
+.prof-img{
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.routing{
+float: right;
+}
+
+#toplogo{
+  width: 100px;
+  height: 100px;
+}
+
+.search{
+    margin: auto;
+    width: 20%;
+    height: 600px;
+    border: 1px ;
+   border-radius: 30px;
+   display: flex;
+   text-align: center;
+   margin-top:50px;
+   margin-bottom: 50px;
+   margin-left:30px;
+   float: left;
+   clear: left;
+   background-color: white;
+   flex-flow: column;
+}
+
+
+
+
+.list{
+    margin: auto;
+    width: 40%;
+    height: 600px;
+    border: 1px ;
+   border-radius: 30px;
+   margin-top:50px;
+   margin-left:30px;
+   float: left;
+   background-color: white;
+       
+}
+
+.btn-list{
+   margin: 20px;
+   display: flex;
+}
+
+
+.btn-list a {
+    display: block;
+    text-align: center;
+    position: relative;
+    margin: 0 5px;
+    padding: 1em 2em;
+    width: 150px;
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: #cccccc;
+    border-radius: 50vh;
+    transition: 0.3s;
+  }
+  
+  .btn-list a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: #f2f2f2;
+    border-radius: 50vh;
+  }
+  
+  .btn-list a::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 32px;
+    transform: translateY(-50%) rotate(45deg);
+    width: 5px;
+    height: 5px;
+    border-top: 3px solid #333333;
+    border-right: 3px solid #333333;
+  }
+  
+  .btn-list a:hover {
+    text-decoration: none;
+    background-color: #FFBBFF;
+  }
+
+  /* セレクトボックス */
+
+  .cp_ipselect {
+    overflow: hidden;
+    width: 85%;
+    height: 30px;
+    margin: 0.5em auto;
+    text-align: center;
+    
+  }
+  .cp_ipselect select {
+    width: 100%;
+    padding-right: 1em;
+    cursor: pointer;
+    text-indent: 0.01px;
+    text-overflow: ellipsis;
+    border: none;
+    outline: none;
+    background: transparent;
+    background-image: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .cp_ipselect select::-ms-expand {
+      display: none;
+  }
+  .cp_ipselect.cp_sl04 {
+    position: relative;
+    border-radius: 2px;
+    border: 2px solid #333333;
+    border-radius: 50px;
+    background: #ffffff;
+  }
+  .cp_ipselect.cp_sl04::before {
+    position: absolute;
+    top: 0.8em;
+    right: 0.8em;
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #333333;
+    pointer-events: none;
+  }
+  .cp_ipselect.cp_sl04 select {
+    padding: 8px 38px 8px 8px;
+    color: #333333;
+  }
+
+  .post-btn{
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    right: 36%;
+    top: ;
+  }

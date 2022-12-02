@@ -1,7 +1,11 @@
 import './App.css';
-import { ApiSample } from './api/ApiSample';
 import React, { useEffect } from 'react'
 import axios from "axios"
+import { AuthProvider } from './api/firebase';
+import ReviewPage from './components/Pages/ReviewPage';
+import TopPage from './components/Pages/TopPage';
+import {BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Header from './components/Header';
 
 function App() {
   //サーバーサイドのエンドポイント
@@ -22,9 +26,18 @@ function App() {
 
 
   return (
-    <div className="App">
-        <ApiSample />
-    </div>
+    <AuthProvider>
+    <Router>
+      <div className="App">
+      <Header/>
+      <Routes>
+          <Route path='/' element={ <TopPage/>} />
+          <Route path='/Review' element={ <ReviewPage/>} />   
+      </Routes>
+
+      </div>
+    </Router>
+    </AuthProvider>
   );
 }
 
