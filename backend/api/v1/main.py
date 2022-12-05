@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends
+from collections import Counter
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
@@ -6,6 +7,9 @@ from sqlalchemy.orm import Session, sessionmaker
 from .db import Girls, Reports, engine
 from sqlalchemy import *
 from typing import Union
+from .feature_extraction import feature_extra
+from .dmm_api import dmm
+
 
 # DB接続用のセッションクラス インスタンスが作成されると接続する
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -54,10 +58,41 @@ def read_root(db: Session = Depends(get_db)):
 
     return '正しくサーバーサイドと通信できてます'
 
+# レコメンドAPI
 @app.post("/postid")
 def read_root(uid: useridParam, db: Session = Depends(get_db)):
-    print(uid.uid)
-    #ユーザーIDからよく投稿している嬢の最頻IDを取得する
+    userID = uid.uid
+    
+    #ユーザーIDから投稿している嬢のIDを取得して配列へ格納する
+    my_report = db.query(Reports).filter(Reports.PostUserId==userID).all()
+    my_GirlId_list = [i.GirlId for i in my_report]
+    mod_GirlId = [k for k in Counter(my_GirlId_list)]
+    
+    #もしもmod_GirlIDが空でなければレコメンド判定へ
+    result_list = []
+    if mod_GirlId == []:
+        return 'None'
+    else:
+        for target in mod_GirlId:
+            result = feature_extra(str(target))
+            result_list.append(result)
+        print(result_list)
+            
+        
+        # 似ている女優の名前でDMMのAPIを叩く
+        maxCount = len(result_list) # MAXカウントは最終的に調整する
+        actorDatas = []
+        for i in range(maxCount):
+            try:    
+                actorData = dmm(result_list[i][1])
+                actorDatas.append(actorData)
+            except dmm.error:
+                continue
+        
+        print(actorDatas)
+        return actorDatas
+        
+    
     return uid
 
 # ガールズテーブルのcuntryにある都道府県で重複排除して渡す

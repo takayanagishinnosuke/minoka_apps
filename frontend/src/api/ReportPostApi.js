@@ -1,12 +1,14 @@
 // このコンポーネントの目的は検索と投稿のAPIサンプルです
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import axios from "axios"
-import { ServerUrl } from './Api'
+import { ServerUrl } from './api'
+import { AuthContext } from './firebase'
 
 
 export const RepoApi = () => {
 
   const [FirstValue, SetFirstValue] = useState(false)
+  const currentUser = useContext(AuthContext)
 
   //都道府県データの取得用
   const [Country, SetCountry] = useState([])
@@ -127,6 +129,8 @@ export const RepoApi = () => {
   // レポートをポストしてDBに登録（UserIDは仮で入れてる）
   const PostReport =()=>{
 
+    const uid = currentUser.currentUser.uid
+
     //もしガールズIDが空ならエラーを出します
     if(!GirlValue){
       alert("女の子を選択してください")
@@ -140,7 +144,7 @@ export const RepoApi = () => {
         charm: CharmScore,
         ex: ExpertScore,
         repo: Report.current.value,
-        uid: "1dbaea"
+        uid: uid
       }).then(res=>{
         //登録完了した場合は投稿内容+「登録完了しました」が返ります。
         // console.log(res)

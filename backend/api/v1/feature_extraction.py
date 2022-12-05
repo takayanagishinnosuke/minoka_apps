@@ -54,4 +54,4 @@ def feature_extra(target):
             continue
 
     # 値が小さい順でソート。ターゲットと似ている顔順の配列[特徴量,女優名]を返す
-    return sorted(result_list)
+    return sorted(result_list)[0]

@@ -1,4 +1,6 @@
 import React from 'react'
+import { RepoApi } from '../../api/ReportPostApi'
+
 
 
 
@@ -6,10 +8,10 @@ import React from 'react'
 function ReviewPage() {
   return (
     <div>
-
       <button>戻る</button>
-
-      <div className='search'></div>
+      <div className='search'>
+        <RepoApi />
+      </div>
 
     </div>
   )

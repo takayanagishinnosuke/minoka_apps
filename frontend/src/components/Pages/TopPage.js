@@ -18,7 +18,6 @@ function TopPage() {
 
     const fetch = async()=>{
         if (currentUser.currentUser.uid){
-            console.log('やほ-')
             const uid = currentUser.currentUser.uid
             //API.jsのサーバーサイドAPIにuidを投げる処理
             UidPost(uid)
