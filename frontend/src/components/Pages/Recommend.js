@@ -15,7 +15,7 @@ const Recommend = () => {
       uid: uid
     }).then(res=>{
       // console.log(res.data)
-      //戻ってきたデータでnull配列が入っていたら除外
+      //戻ってきたデータでnull配列がないかダブルチェック
       setrecommendData(res.data.filter((item)=>item!=null))
     }).catch(err=>{
       console.log(err)

@@ -36,18 +36,10 @@ function TopPage() {
                     <option value="1">東京</option>
                     <option value="2">大阪</option>
                     <option value="3">福岡</option>
-                    <option value="4">北海道</option>
+                    <option value="4">愛知</option>
                 </select>
             </div>
-            <div className="cp_ipselect cp_sl04">
-                <select required>
-                    <option value="" hidden>ジャンル</option>
-                    <option value="1">可愛い</option>
-                    <option value="2">綺麗</option>
-                    <option value="3">人妻</option>
-                    <option value="4">素人</option>
-                </select>
-            </div>
+
             <div className="cp_ipselect cp_sl04">
                 <select required>
                     <option value="" hidden>カップ数</option>

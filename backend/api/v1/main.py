@@ -94,8 +94,10 @@ def postid_root(uid: useridParam, db: Session = Depends(get_db)):
             except:
                 pass
 
-        print(actorDatas)
-        return actorDatas
+        # NULLデータを除外して最終的な配列へ
+        actDatasList = [k for k in actorDatas if k is not None]
+        print(actDatasList)
+        return actDatasList
 
 
 # ガールズテーブルのcuntryにある都道府県で重複排除して渡す

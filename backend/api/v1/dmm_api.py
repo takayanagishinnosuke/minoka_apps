@@ -14,7 +14,7 @@ def dmm(keyname):
 
     res = requests.get(url)
     res_text = json.loads(res.text)
-    print(res_text)
+    # print(res_text)
 
     try:
         res_list = res_text["result"]["actress"][0]
@@ -26,7 +26,7 @@ def dmm(keyname):
                 'waist': res_list["waist"],
                 'hip': res_list["hip"],
                 'height': res_list["height"],
-                'image': 'なし'
+                'image': 'images/NoImage.jpeg'
             }
 
             return actorData

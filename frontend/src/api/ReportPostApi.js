@@ -226,7 +226,7 @@ export const RepoApi = () => {
     </div>
 
     <div>
-      <label>本物度</label>
+      <label>パネマジ度</label>
       <select onChange={(e)=> ExpertChange(e)}>
         <option value={0}>選択してください</option>
         <option value={1}>1点</option>
