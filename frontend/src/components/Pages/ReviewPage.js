@@ -1,5 +1,8 @@
 import React from 'react'
 import { RepoApi } from '../../api/ReportPostApi'
+import { Link } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
+import './TopPage.css';
 
 
 
@@ -8,7 +11,8 @@ import { RepoApi } from '../../api/ReportPostApi'
 function ReviewPage() {
   return (
     <div>
-      <button>戻る</button>
+      <Link to="/"><HomeIcon sx={{ fontSize: 80}}/></Link>
+      
       <div className='search'>
         <RepoApi />
       </div>

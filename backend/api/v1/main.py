@@ -35,9 +35,11 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-#--ここから型クラス定義-----
+# --ここから型クラス定義-----
 
 # レポート登録用のクラス
+
+
 class ReportParam(BaseModel):
     gid: int
     charm: int
@@ -46,10 +48,13 @@ class ReportParam(BaseModel):
     uid: str
 
 # uid受け取り用定義
+
+
 class useridParam(BaseModel):
     uid: str
 
-#---------------------------
+# ---------------------------
+
 
 @app.get("/")
 def read_root(db: Session = Depends(get_db)):
@@ -58,17 +63,18 @@ def read_root(db: Session = Depends(get_db)):
 
     return '正しくサーバーサイドと通信できてます'
 
+
 # レコメンドAPI
 @app.post("/postid")
-def read_root(uid: useridParam, db: Session = Depends(get_db)):
+def postid_root(uid: useridParam, db: Session = Depends(get_db)):
     userID = uid.uid
-    
-    #ユーザーIDから投稿している嬢のIDを取得して配列へ格納する
-    my_report = db.query(Reports).filter(Reports.PostUserId==userID).all()
+
+    # ユーザーIDから投稿している嬢のIDを取得して配列へ格納する
+    my_report = db.query(Reports).filter(Reports.PostUserId == userID).all()
     my_GirlId_list = [i.GirlId for i in my_report]
     mod_GirlId = [k for k in Counter(my_GirlId_list)]
-    
-    #もしもmod_GirlIDが空でなければレコメンド判定へ
+
+    # もしもmod_GirlIDが空でなければレコメンド判定へ
     result_list = []
     if mod_GirlId == []:
         return 'None'
@@ -77,34 +83,31 @@ def read_root(uid: useridParam, db: Session = Depends(get_db)):
             result = feature_extra(str(target))
             result_list.append(result)
         print(result_list)
-            
-        
+
         # 似ている女優の名前でDMMのAPIを叩く
-        maxCount = len(result_list) # MAXカウントは最終的に調整する
+        maxCount = len(result_list)  # MAXカウントは最終的に調整する
         actorDatas = []
         for i in range(maxCount):
-            try:    
+            try:
                 actorData = dmm(result_list[i][1])
                 actorDatas.append(actorData)
-            except dmm.error:
-                continue
-        
+            except:
+                pass
+
         print(actorDatas)
         return actorDatas
-        
-    
-    return uid
+
 
 # ガールズテーブルのcuntryにある都道府県で重複排除して渡す
 @app.get("/serchcountry")
-def read_root(db: Session = Depends(get_db)):
+def serchcountry_root(db: Session = Depends(get_db)):
     country = db.query(Girls.Country).distinct().limit(48).all()
     return country
 
 
 # 都道府県が一致した店舗の名前を返す
 @app.get("/serchshop/{country}")
-def read_root(country, db: Session = Depends(get_db)):
+def serchshop_root(country, db: Session = Depends(get_db)):
     store = db.query(Girls.Store).filter(
         Girls.Country == country).distinct().limit(100).all()
     return store
@@ -112,7 +115,7 @@ def read_root(country, db: Session = Depends(get_db)):
 
 # ガール検索用のエンドポイント
 @app.get("/serchgirl/{store}")
-def read_root(store, db: Session = Depends(get_db)):
+def serchgirl_root(store, db: Session = Depends(get_db)):
     girl = db.query(Girls.id, Girls.Name, Girls.imgUrl).filter(
         Girls.Store == store).distinct().limit(100).all()
     return girl

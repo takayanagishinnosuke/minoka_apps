@@ -14,12 +14,7 @@ function Header() {
             <div className='header' id="toplogo">
             <img src="images/logo.png"></img>
             <div className='routing'>
-            <li>
-                <Link to="/">ホーム</Link>
-            </li>
-            <li>
-                <Link to="/Review">投稿画面</Link>
-            </li>
+
             </div>
             </div>
         </header>

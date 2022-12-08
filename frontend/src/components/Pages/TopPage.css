@@ -114,6 +114,22 @@ float: right;
   height: 100px;
 }
 
+
+/* mainのCSS */
+
+.recommend{
+  margin: auto;
+  width: 63%;
+  height: 300px;
+  border: 1px ;
+  border-color: #333333;
+  border-radius: 30px;
+  margin-top:20px;
+  margin-left:30px;
+  background-color: white;
+}
+
+
 .search{
     margin: auto;
     width: 20%;
@@ -147,13 +163,26 @@ float: right;
        
 }
 
+.posts{
+  margin: auto;
+  width: 90%;
+  height: 60%;
+  border: 1px ;
+  border-color: #333333;
+ border-radius: 30px;
+ margin-top:50px;
+ margin-left:30px;
+ float: left;
+ background-color: #cccccc;
+}
+
 .btn-list{
    margin: 20px;
    display: flex;
 }
 
 
-.btn-list a {
+.btn-list li {
     display: block;
     text-align: center;
     position: relative;
@@ -168,7 +197,7 @@ float: right;
     transition: 0.3s;
   }
   
-  .btn-list a::before {
+  .btn-list li::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -180,7 +209,7 @@ float: right;
     border-radius: 50vh;
   }
   
-  .btn-list a::after {
+  .btn-list li::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -192,9 +221,14 @@ float: right;
     border-right: 3px solid #333333;
   }
   
-  .btn-list a:hover {
+  .btn-list li:hover {
     text-decoration: none;
     background-color: #FFBBFF;
+  }
+
+  .post-btn{
+    text-align: right;
+    width: 100%;
   }
 
   /* セレクトボックス */
@@ -249,10 +283,23 @@ float: right;
     color: #333333;
   }
 
-  .post-btn{
-    text-align: right;
-    width: 100%;
-    position: absolute;
-    right: 36%;
-    top: ;
+ 
+  /* 投稿画面CSS */
+
+  textarea{
+    width: 80%;
+    height: 40%;
+    border-radius: 20px ;
+    margin: auto;
+  }
+
+  .Homebtn{
+    text-align: left;
+  }
+
+
+  /* 追加した（池田） */
+  .recommend_datas{
+    display: flex;
+    gap: 50px;
   }

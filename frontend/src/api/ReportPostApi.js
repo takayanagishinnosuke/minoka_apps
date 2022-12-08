@@ -4,6 +4,8 @@ import axios from "axios"
 import { ServerUrl } from './api'
 import { AuthContext } from './firebase'
 
+import '../components/Pages/TopPage.css';
+
 
 export const RepoApi = () => {
 
@@ -159,43 +161,48 @@ export const RepoApi = () => {
   
   return (
     <>
-    <h1>レポート投稿</h1>
     <div>
-        <label>都道府県</label>
+      <label>都道府県</label>
+      <div className="cp_ipselect cp_sl04">
         <select onChange={(e) => contryChange(e)}>
-        <option value={0} data-address={null}>選択してください</option>
-        {Country.map((country) =>{
-          return(
-            <option key={country}>{country}</option>
+          <option value={0} data-address={null}>選択してください</option>
+          {Country.map((country) =>{
+            return(
+              <option key={country}>{country}</option>
           )
         })}
         </select>
+      </div>
     </div>
 
     <div>
       <label>店名</label>
-      <select onChange={(e) => StoreChange(e)}>
-      <option value={0} data-address={null}>選択してください</option>
-        {Store.map((store) =>{
-          return(
-            <option key={store}>{store}</option>
-          )
-        })}
-      </select>
+      <div className="cp_ipselect cp_sl04">
+        <select onChange={(e) => StoreChange(e)}>
+        <option value={0} data-address={null}>選択してください</option>
+          {Store.map((store) =>{
+            return(
+              <option key={store}>{store}</option>
+            )
+          })}
+        </select>
+      </div>
     </div>
     
     <div>
       <label>女の子名</label>
-      <select onChange={(e) => GirlChange(e)}>
-        <option value={0} data-address={null}>選択してください</option>
-        {Girls.map((girl) =>{
-          return(
-            <option key={girl.id} value={girl.id} data-address={girl.url}>
-              {girl.name}
-            </option>
-          )
-        })}
-      </select>
+      <div className="cp_ipselect cp_sl04">
+        <select onChange={(e) => GirlChange(e)}>
+          <option value={0} data-address={null}>選択してください</option>
+          {Girls.map((girl) =>{
+            return(
+              <option key={girl.id} value={girl.id} data-address={girl.url}>
+                {girl.name}
+              </option>
+            )
+          })}
+        </select>
+      </div>
     </div>
     
     <div>
@@ -232,11 +239,12 @@ export const RepoApi = () => {
 
     <div>
       <p>レポート内容</p>
-      <textarea cols="80" rows="10" ref={Report}></textarea>
+      <textarea cols="80" rows="10" ref={Report} placeholder='どんな体験だった？'>
+      </textarea>
     </div>
 
-    <div>
-      <button onClick={PostReport}>投稿</button>
+    <div className='btn-list'>
+      <li onClick={PostReport}>投稿</li>
     </div>
 
     </>

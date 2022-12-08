@@ -1,34 +1,31 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './TopPage.css';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../api/firebase';
+import { auth } from '../../api/firebase';
+import {useAuthState} from "react-firebase-hooks/auth";
 //デザイン
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { UidPost } from '../../api/api';
-// import ReviewPage from './ReviewPage';
-
+//コンポーネント
+import Recommend from './Recommend';
+import Report from './Report'
+import Girls from './Girls'
 
 
 function TopPage() {
-    const currentUser = useContext(AuthContext)
+    const [user] = useAuthState(auth);
+    const [tab, setTab ] = useState();
     
-    useEffect(()=>{
-        fetch()
-    },[currentUser])
-
-    const fetch = async()=>{
-        if (currentUser.currentUser.uid){
-            const uid = currentUser.currentUser.uid
-            //API.jsのサーバーサイドAPIにuidを投げる処理
-            UidPost(uid)
-        };
-    };
-
   return (
       
     <div className='main'>
 
-       
+       {user ? (
+        <>
+            <Recommend />
+        </>
+       ) : (
+        <></>
+       )}
 
         <div className='body'>
             <div className='search'>
@@ -75,36 +72,39 @@ function TopPage() {
                 </select>
             </div>
             <div className='btn-list'>
-                    <a herf="#">検索</a>
-                </div>
-
+                <li herf="#">検索</li>
+            </div>
 
             </div>
 
 
             <div className='list'>
-                <div className='btn-list'>
-                    <a herf="#">レビュー</a>
-                    <a herf="#">姫</a>
-                    <a herf="#">店舗</a>
-                </div>
+            <ul className='btn-list'>
+                <li  onClick={() => setTab('review')}>レビュー</li>
+                <li  onClick={() => setTab('girls')}>女の子</li>
+            </ul>
+
+            {/* 画面切り替え */}
+                {
+                    tab === 'review' ? <Report /> : <Girls/>
+                }    
+
+            {user ? (
+                <>
                 <div className='post-btn'>
-            
-                   
-                    
-                <AddCircleIcon sx={{ fontSize: 80}} 
-                    color="secondary"
-                    component={Link} to="/Review"
-                    >
-                    </AddCircleIcon>
+                    <Link to="/Review">                       
+                    <AddCircleIcon sx={{ fontSize: 80}} color="secondary"/>
+                    </Link>
                 </div>
-                </div>
-
-                
+                </>
+                ) : (
+                <></>
+                )}
             </div>
+                
         </div>
+    </div>
     
-
   )
 }
 

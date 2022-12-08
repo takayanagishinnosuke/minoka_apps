@@ -1,8 +1,9 @@
 import React from 'react'
+import './TopPage.css';
 
 function Girls() {
   return (
-    <div>Girls</div>
+    <div className='posts'>うううう</div>
   )
 }
 
