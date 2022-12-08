@@ -47,9 +47,14 @@ class ReportParam(BaseModel):
     repo: str
     uid: str
 
+
+class SerchParam(BaseModel):
+    country: str
+    size: str
+    style: str
+
+
 # uid受け取り用定義
-
-
 class useridParam(BaseModel):
     uid: str
 
@@ -62,6 +67,13 @@ def read_root(db: Session = Depends(get_db)):
     # print(girls)
 
     return '正しくサーバーサイドと通信できてます'
+
+
+# 検索API
+@app.post("/serch")
+def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
+
+    return serchParam
 
 
 # レコメンドAPI
@@ -96,6 +108,11 @@ def postid_root(uid: useridParam, db: Session = Depends(get_db)):
 
         # NULLデータを除外して最終的な配列へ
         actDatasList = [k for k in actorDatas if k is not None]
+        # もしも4件以上のデータが入っているようなら先頭の4つまでに絞る
+        if len(actDatasList) > 4:
+            actDatasList_max = [actDatasList[i] for i in range(4)]
+            return actDatasList_max
+
         print(actDatasList)
         return actDatasList
 

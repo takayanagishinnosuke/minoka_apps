@@ -3,6 +3,8 @@ import './TopPage.css';
 import { Link } from 'react-router-dom';
 import { auth } from '../../api/firebase';
 import {useAuthState} from "react-firebase-hooks/auth";
+import axios from "axios"
+import { ServerUrl } from '../../api/api'
 //デザイン
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 //コンポーネント
@@ -14,6 +16,39 @@ import Girls from './Girls'
 function TopPage() {
     const [user] = useAuthState(auth);
     const [tab, setTab ] = useState();
+    //都道府県格納用
+    const [CountryValue, SetCountryValue] = useState("None")
+    //カップ数格納用
+    const [SizeValue, SetSizeValue] = useState("None")
+    //スタイル数格納用
+    const [StyleValue, SetStyleValue] = useState("None")
+
+    //都道府県に選択があれば変化した値を取得
+    const CountryChange = (e) =>{
+        SetCountryValue(e.target.value)
+    }
+    //カップ数の選択に変化があれば変化した値を取得
+    const SizeChange = (e) =>{
+        SetSizeValue(e.target.value)
+    }
+    //スタイルの選択に変化があれば変化した値を取得
+    const StyleChange = (e) =>{
+        SetStyleValue(e.target.value)
+    }
+
+    //絞り込みしてAPI叩き、データを受け取る関数
+    const SerchPost = () =>{
+        axios.post(ServerUrl + "serch",{
+            country:CountryValue,
+            size:SizeValue,
+            style:StyleValue
+        }).then(res =>{
+            console.log(res)
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+
     
   return (
       
@@ -30,41 +65,41 @@ function TopPage() {
         <div className='body'>
             <div className='search'>
             <div className="cp_ipselect cp_sl04">
-                <select required>
-                    <option value="" hidden>都道府県</option>
+                <select onChange={(e)=> CountryChange(e)} required>
+                    <option value="None" hidden>都道府県</option>
                     {/* 都道府県DBから選べるようにしたい */}
-                    <option value="1">東京</option>
-                    <option value="2">大阪</option>
-                    <option value="3">福岡</option>
-                    <option value="4">愛知</option>
+                    <option value="東京">東京</option>
+                    <option value="大阪">大阪</option>
+                    <option value="福岡">福岡</option>
+                    <option value="愛知">愛知</option>
                 </select>
             </div>
 
             <div className="cp_ipselect cp_sl04">
-                <select required>
-                    <option value="" hidden>カップ数</option>
-                    <option value="1">A</option>
-                    <option value="2">B</option>
-                    <option value="3">C</option>
-                    <option value="4">D</option>
-                    <option value="1">E</option>
-                    <option value="2">F</option>
-                    <option value="3">G</option>
-                    <option value="4">H</option>
-                    <option value="4">I</option>
+                <select onChange={(e)=> SizeChange(e)} required>
+                    <option value="None" hidden>カップ数</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
+                    <option value="H">H</option>
+                    <option value="I">I</option>
                 </select>
             </div>
             <div className="cp_ipselect cp_sl04">
-                <select required>
-                    <option value="" hidden>体型</option>
-                    <option value="1">スレンダー</option>
-                    <option value="2">普通</option>
-                    <option value="3">グラマー</option>
-                    <option value="4">ぽっちゃり</option>                
+                <select onChange={(e)=> StyleChange(e)} required>
+                    <option value="None" hidden>体型</option>
+                    <option value="スリム">スリム</option>
+                    <option value="普通">普通</option>
+                    <option value="グラマー">グラマー</option>
+                    <option value="ぽっちゃり">ぽっちゃり</option>                
                 </select>
             </div>
             <div className='btn-list'>
-                <li herf="#">検索</li>
+                <li onClick={SerchPost}>検索</li>
             </div>
 
             </div>
