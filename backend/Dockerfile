@@ -6,8 +6,8 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y libgl1-mesa-dev
 RUN apt-get install -y sqlite3
 RUN pip install --upgrade pip
+COPY . /src
 RUN pip install -r requirements.txt
-# COPY . /src
 COPY pyproject.toml* ./ 
 COPY poetry.lock* ./
 RUN poetry config virtualenvs.in-project true
