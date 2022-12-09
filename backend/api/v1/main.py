@@ -77,12 +77,12 @@ def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
         # スタイルだけで一致させるクエリ
         # 一致するガールズデータを取得
         returnGarlsData = db.query(Girls).filter(
-            Girls.Style == serchParam.style).all()
+            Girls.Style == serchParam.style).order_by(desc(Girls.Store)).all()
         # 一致するレポートデータを取得
         returnReportData = db.query(
-            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
             Reports, Girls.id == Reports.GirlId).filter(
-            Girls.Style == serchParam.style).all()
+            Girls.Style == serchParam.style).order_by(desc(Girls.id)).all()
 
         return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
 
@@ -91,12 +91,13 @@ def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
         # サイズだけで一致させるクエリ
         # 一致するガールズデータ
         returnGarlsData = db.query(Girls).filter(
-            Girls.Size == serchParam.size).all()
+            Girls.Size == serchParam.size).order_by(desc(Girls.Store)).all()
+
         # 一致するレポートデータを取得
         returnReportData = db.query(
-            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
             Reports, Girls.id == Reports.GirlId).filter(
-            Girls.Size == serchParam.size).all()
+            Girls.Size == serchParam.size).order_by(desc(Girls.id)).all()
 
         return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
 
@@ -105,12 +106,13 @@ def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
         # 都道府県だけで一致させるクエリ
         # 一致するガールズデータ
         returnGarlsData = db.query(Girls).filter(
-            Girls.Country == serchParam.country).all()
+            Girls.Country == serchParam.country).order_by(desc(Girls.Store)).all()
+
         # 一致するレポートデータを取得
         returnReportData = db.query(
-            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
             Reports, Girls.id == Reports.GirlId).filter(
-            Girls.Country == serchParam.country).all()
+            Girls.Country == serchParam.country).order_by(desc(Girls.id)).all()
 
         return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
 
@@ -119,12 +121,13 @@ def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
         # サイズとスタイルで一致させるクエリ
         # 一致するガールズデータを取得
         returnGarlsData = db.query(Girls).filter(
-            Girls.Size == serchParam.size, Girls.Style == serchParam.style).all()
+            Girls.Size == serchParam.size, Girls.Style == serchParam.style).order_by(desc(Girls.Store)).all()
+
         # 一致するレポートデータを取得
         returnReportData = db.query(
-            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
             Reports, Girls.id == Reports.GirlId).filter(
-            Girls.Size == serchParam.size, Girls.Style == serchParam.style).all()
+            Girls.Size == serchParam.size, Girls.Style == serchParam.style).order_by(desc(Girls.id)).all()
 
         return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
 
@@ -133,12 +136,13 @@ def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
         # 都道府県とスタイルで一致させるクエリ
         # 一致するガールズデータを取得
         returnGarlsData = db.query(Girls).filter(
-            Girls.Country == serchParam.country, Girls.Style == serchParam.style).all()
+            Girls.Country == serchParam.country, Girls.Style == serchParam.style).order_by(desc(Girls.Store)).all()
+
         # 一致するレポートデータを取得
         returnReportData = db.query(
-            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
             Reports, Girls.id == Reports.GirlId).filter(
-            Girls.Country == serchParam.country, Girls.Style == serchParam.style).all()
+            Girls.Country == serchParam.country, Girls.Style == serchParam.style).order_by(desc(Girls.id)).all()
 
         return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
 
@@ -147,12 +151,13 @@ def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
         # 都道府県とサイズで一致させるクエリ
         # 一致するガールズデータを取得
         returnGarlsData = db.query(Girls).filter(
-            Girls.Country == serchParam.country, Girls.Size == serchParam.size).all()
+            Girls.Country == serchParam.country, Girls.Size == serchParam.size).order_by(desc(Girls.Store)).all()
+
         # 一致するレポートデータを取得
         returnReportData = db.query(
-            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
             Reports, Girls.id == Reports.GirlId).filter(
-            Girls.Country == serchParam.country, Girls.Size == serchParam.size).all()
+            Girls.Country == serchParam.country, Girls.Size == serchParam.size).order_by(desc(Girls.id)).all()
 
         return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
 
@@ -163,14 +168,16 @@ def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
         returnGarlsData = db.query(Girls).filter(
             Girls.Country == serchParam.country,
             Girls.Size == serchParam.size,
-            Girls.Style == serchParam.style).all()
+            Girls.Style == serchParam.style).order_by(desc(Girls.Store)).all()
+
         # 一致するレポートデータを取得
         returnReportData = db.query(
-            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
             Reports, Girls.id == Reports.GirlId).filter(
             Girls.Country == serchParam.country,
             Girls.Size == serchParam.size,
-            Girls.Style == serchParam.style).all()
+            Girls.Style == serchParam.style).order_by(desc(Girls.id)).all()
+
         return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
 
 
