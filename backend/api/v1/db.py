@@ -1,7 +1,7 @@
 import os
-from sqlalchemy import Boolean, Column, Integer, String, create_engine
+from sqlalchemy import Boolean, Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./sql.db"
 
@@ -42,15 +42,19 @@ class Girls(Base):
     StoreType = Column('StoreType', String(100))
     imgUrl = Column('imgUrl', String(300))
 
+    reports = relationship('Reports', back_populates='girls')
+
 
 class Reports(Base):
     __tablename__ = 'reports'
     id = Column('id', Integer, primary_key=True, autoincrement=True)
-    GirlId = Column('GirlId', Integer)
+    GirlId = Column('GirlId', Integer, ForeignKey('girls.id'))
     CharmScore = Column('CharmScore', Integer)
     ExpertScore = Column('ExpertScore', Integer)
     Report = Column('Report', String(500))
     PostUserId = Column('PostUserId', String(100))
+
+    girls = relationship('Girls', back_populates='reports')
 
 
 if __name__ == "__main__":

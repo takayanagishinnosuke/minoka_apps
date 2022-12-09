@@ -23,6 +23,12 @@ function TopPage() {
     //スタイル数格納用
     const [StyleValue, SetStyleValue] = useState("None")
 
+    //DBからのガールズデータ格納用
+    const [GirlsData,setGirlsData] = useState([])
+
+    //DBからのレポートデータ格納用
+    const [ReportsData,setReportsData] = useState([])
+
     //都道府県に選択があれば変化した値を取得
     const CountryChange = (e) =>{
         SetCountryValue(e.target.value)
@@ -38,15 +44,23 @@ function TopPage() {
 
     //絞り込みしてAPI叩き、データを受け取る関数
     const SerchPost = () =>{
-        axios.post(ServerUrl + "serch",{
-            country:CountryValue,
-            size:SizeValue,
-            style:StyleValue
-        }).then(res =>{
-            console.log(res)
-        }).catch(err=>{
-            console.log(err)
-        })
+        if(CountryValue==="None" && SizeValue==="None" && StyleValue==="None"){
+            alert("検索条件を1つ以上選択してください")
+        }else{
+            axios.post(ServerUrl + "serch",{
+                country:CountryValue,
+                size:SizeValue,
+                style:StyleValue
+            }).then(res =>{
+                // console.log(res)
+                // console.log(res.data.GarlsData)
+                setGirlsData(res.data.GarlsData)
+                // console.log(res.data.ReportData)
+                setReportsData(res.data.ReportData)
+            }).catch(err=>{
+                console.log(err)
+            })
+        };
     }
 
     
@@ -113,7 +127,8 @@ function TopPage() {
 
             {/* 画面切り替え */}
                 {
-                    tab === 'review' ? <Report /> : <Girls/>
+                    tab === 'review' ? <Report ReportsData={ReportsData}/> : 
+                    <Girls GarlsData={GirlsData}/>
                 }    
 
             {user ? (

@@ -72,8 +72,106 @@ def read_root(db: Session = Depends(get_db)):
 # 検索API
 @app.post("/serch")
 def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
+    if serchParam.country == 'None' and serchParam.size == 'None':
+        print('都道府県とサイズが空のとき')
+        # スタイルだけで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Style == serchParam.style).all()
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Style == serchParam.style).all()
 
-    return serchParam
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.country == 'None' and serchParam.style == 'None':
+        print('都道府県とスタイルが空のとき')
+        # サイズだけで一致させるクエリ
+        # 一致するガールズデータ
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Size == serchParam.size).all()
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Size == serchParam.size).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.size == 'None' and serchParam.style == 'None':
+        print('サイズとスタイルが空のとき')
+        # 都道府県だけで一致させるクエリ
+        # 一致するガールズデータ
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Country == serchParam.country).all()
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Country == serchParam.country).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.country == 'None':
+        print('都道府県が空のとき')
+        # サイズとスタイルで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Size == serchParam.size, Girls.Style == serchParam.style).all()
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Size == serchParam.size, Girls.Style == serchParam.style).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.size == 'None':
+        print('サイズ空のとき')
+        # 都道府県とスタイルで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Country == serchParam.country, Girls.Style == serchParam.style).all()
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Country == serchParam.country, Girls.Style == serchParam.style).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.style == 'None':
+        print('スタイル空のとき')
+        # 都道府県とサイズで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Country == serchParam.country, Girls.Size == serchParam.size).all()
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Country == serchParam.country, Girls.Size == serchParam.size).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    else:
+        print('全ての値がちゃんとはいっているとき')
+        # 全てのパラメーターで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Country == serchParam.country,
+            Girls.Size == serchParam.size,
+            Girls.Style == serchParam.style).all()
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Country == serchParam.country,
+            Girls.Size == serchParam.size,
+            Girls.Style == serchParam.style).all()
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
 
 
 # レコメンドAPI

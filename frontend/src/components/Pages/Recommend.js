@@ -31,11 +31,11 @@ const Recommend = () => {
       };
   };
 
-  //画面の初期リロード時に発火
+  //レコメンドAPIはユーザーIDに変更があったときに発火
   useEffect(()=>{
     fetch();
   },[])
-  
+    
   //確認用
   if(recommendData){
     console.log(recommendData)
