@@ -80,38 +80,81 @@ html{
 }
 
 
+
 header{
     width: 100%;
     height: 100px;
     background-color: #646ccc;
+
+}
+
+.header-login{
+  width: 20%;
+  height: 100%;
+  margin: auto;
+  float: right;
 }
 
 .body{
   position: relative; 
   width: 100%;
-    height: 100%;
+  height: 100%;
 }
 
+.headerbtn{
+  display: block;
+	text-align: center;
+ 	text-decoration: none;
+	width: 70%;
+  height: 50%;
+  float: right;
+}
 
+button#headerbtn{
+  margin: 20px;
+  padding: 1rem 2rem;
+	font-weight: bold;
+	border: none;
+	background: #FFBBFF;
+	color: #fff;
+	border-radius: 100vh;
+	transition: 0.5s;
+  float: right;
+}
+
+button#headerbtn:hover {
+	color: #fff;
+	background: #FF66FF;
+}
 
 
 .login{
   float: right;
 }
 
+
+.homeicon{
+  margin: 10px;
+  float: right;
+}
+
 .prof-img{
+  margin: 20px;
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  float: right;
 }
 
-.routing{
-float: right;
+p#name{
+  font-size: 12px;
 }
+
 
 #toplogo{
   width: 100px;
   height: 100px;
+  float: left;
 }
 
 
@@ -129,6 +172,8 @@ float: right;
   background-color: white;
 }
 
+
+/* 検索画面 */
 
 .search{
     margin: auto;
@@ -148,6 +193,13 @@ float: right;
 }
 
 
+
+p#serchtitle{
+  text-align: center;
+  margin: 5% 10%;
+  width: 80%;
+  border-bottom: solid 2px #333333;
+}
 
 
 .list{
@@ -186,7 +238,7 @@ float: right;
     display: block;
     text-align: center;
     position: relative;
-    margin: 0 5px;
+    margin: auto;
     padding: 1em 2em;
     width: 150px;
     color: #333;
@@ -236,14 +288,17 @@ float: right;
   .cp_ipselect {
     overflow: hidden;
     width: 85%;
-    height: 30px;
-    margin: 0.5em auto;
+    height: 50px;
+    margin: 1.5em auto;
     text-align: center;
-    
+     
   }
   .cp_ipselect select {
+    
+
+    color: #333;
+    font-size: 20px;
     width: 100%;
-    padding-right: 1em;
     cursor: pointer;
     text-indent: 0.01px;
     text-overflow: ellipsis;
@@ -297,9 +352,39 @@ float: right;
     text-align: left;
   }
 
+  .report{
+    margin: auto;
+    width: 60%;
+    height: 80%;
+    margin-top:50px;
+    border: 1px ;
+    border-radius: 30px;
+    background-color: white;
+    flex-flow: column;
+}
+
+.btn-list{
+  margin: 20px;
+  display: flex;
+}
 
   /* 追加した（池田） */
   .recommend_datas{
     display: flex;
     gap: 50px;
+  }
+
+.serchtitle{
+  text-align: center;
+  margin: 0 10%;
+  border-bottom: solid 2px #333333;
+  }
+
+  .girls-img{
+    text-align: center;
+  }
+
+  .report-text{
+    text-align: center;
+    padding: 10px;
   }

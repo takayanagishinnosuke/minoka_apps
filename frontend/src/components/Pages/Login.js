@@ -41,9 +41,11 @@ function SignInButton(){
     };
 
     return(
-        <button onClick={signInWithGoogle}>
+        <div className='headerbtn'>
+        <button id="headerbtn" onClick={signInWithGoogle}>
            <p> サインイン</p>
         </button>
+        </div>
     )
         
 }
@@ -52,9 +54,11 @@ function SignInButton(){
 function SignOutButton(){
 
     return(
-        <button onClick={() => auth.signOut()}>
+        <div className='headerbtn'>
+        <button id="headerbtn" onClick={() => auth.signOut()}>
            <p> サインアウト</p>
         </button>
+        </div>
     );
         
 }
@@ -62,9 +66,9 @@ function SignOutButton(){
 function UserInfo(){
 
     return(
-       <div>
-           <img src={auth.currentUser.photoURL} alt="" className='prof-img'></img>
-           <p>{auth.currentUser.displayName}</p>
+       <div className='prof-img'>
+           <img src={auth.currentUser.photoURL} alt="" ></img>
+           <p id='name'>{auth.currentUser.displayName}</p>
        </div>
     );
         
