@@ -37,9 +37,8 @@ app.add_middleware(
 
 # --ここから型クラス定義-----
 
+
 # レポート登録用のクラス
-
-
 class ReportParam(BaseModel):
     gid: int
     charm: int
