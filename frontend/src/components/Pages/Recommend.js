@@ -31,11 +31,11 @@ const Recommend = () => {
       };
   };
 
-  //画面の初期リロード時に発火
+  //レコメンドAPIはユーザーIDに変更があったときに発火
   useEffect(()=>{
     fetch();
   },[])
-  
+    
   //確認用
   if(recommendData){
     console.log(recommendData)
@@ -51,7 +51,36 @@ return (
         {recommendData.map((data)=>(
             <div key={uuidv4()}>
               <p>{data.name}</p>
-              <img src={data.image} />
+              <a href={data.shop} target="_blank" rel='noopener noreferrer'>
+                <img src={data.image} />
+              </a>
+              {data.bust ? (
+                <>
+                <p>バスト : {data.bust}♡</p>
+                </>
+              ):(
+                <>
+                <p>バスト : 秘密♡</p>
+                </>
+              )}
+              {data.waist ? (
+                <>
+                <p>ウェスト : {data.waist}♡</p>
+                </>
+              ):(
+                <>
+                <p>ウェスト : 秘密♡</p>
+                </>
+              )}
+              {data.hip ? (
+                <>
+                <p>ヒップ : {data.hip}♡</p>
+                </>
+              ):(
+                <>
+                <p>ヒップ : 秘密♡</p>
+                </>
+              )}
             </div>
             ))}
       </div>

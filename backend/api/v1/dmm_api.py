@@ -26,7 +26,8 @@ def dmm(keyname):
                 'waist': res_list["waist"],
                 'hip': res_list["hip"],
                 'height': res_list["height"],
-                'image': 'images/NoImage.jpeg'
+                'image': 'images/NoImage.jpeg',
+                'shop': res_list["listURL"]["monthly"]
             }
 
             return actorData
@@ -38,7 +39,8 @@ def dmm(keyname):
                 'waist': res_list["waist"],
                 'hip': res_list["hip"],
                 'height': res_list["height"],
-                'image': res_list["imageURL"]["large"]
+                'image': res_list["imageURL"]["large"],
+                'shop': res_list["listURL"]["monthly"]
             }
 
             return actorData

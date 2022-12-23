@@ -7,6 +7,7 @@ RUN apt-get install -y libgl1-mesa-dev
 RUN apt-get install -y sqlite3
 RUN pip install --upgrade pip
 COPY . /src
+RUN . .venv/bin/activate
 RUN pip install -r requirements.txt
 COPY pyproject.toml* ./ 
 COPY poetry.lock* ./

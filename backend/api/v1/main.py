@@ -47,9 +47,14 @@ class ReportParam(BaseModel):
     repo: str
     uid: str
 
+
+class SerchParam(BaseModel):
+    country: str
+    size: str
+    style: str
+
+
 # uid受け取り用定義
-
-
 class useridParam(BaseModel):
     uid: str
 
@@ -62,6 +67,118 @@ def read_root(db: Session = Depends(get_db)):
     # print(girls)
 
     return '正しくサーバーサイドと通信できてます'
+
+
+# 検索API
+@app.post("/serch")
+def serch_root(serchParam: SerchParam, db: Session = Depends(get_db)):
+    if serchParam.country == 'None' and serchParam.size == 'None':
+        print('都道府県とサイズが空のとき')
+        # スタイルだけで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Style == serchParam.style).order_by(desc(Girls.Store)).all()
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Style == serchParam.style).order_by(desc(Girls.id)).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.country == 'None' and serchParam.style == 'None':
+        print('都道府県とスタイルが空のとき')
+        # サイズだけで一致させるクエリ
+        # 一致するガールズデータ
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Size == serchParam.size).order_by(desc(Girls.Store)).all()
+
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Size == serchParam.size).order_by(desc(Girls.id)).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.size == 'None' and serchParam.style == 'None':
+        print('サイズとスタイルが空のとき')
+        # 都道府県だけで一致させるクエリ
+        # 一致するガールズデータ
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Country == serchParam.country).order_by(desc(Girls.Store)).all()
+
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Country == serchParam.country).order_by(desc(Girls.id)).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.country == 'None':
+        print('都道府県が空のとき')
+        # サイズとスタイルで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Size == serchParam.size, Girls.Style == serchParam.style).order_by(desc(Girls.Store)).all()
+
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Size == serchParam.size, Girls.Style == serchParam.style).order_by(desc(Girls.id)).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.size == 'None':
+        print('サイズ空のとき')
+        # 都道府県とスタイルで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Country == serchParam.country, Girls.Style == serchParam.style).order_by(desc(Girls.Store)).all()
+
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Country == serchParam.country, Girls.Style == serchParam.style).order_by(desc(Girls.id)).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    elif serchParam.style == 'None':
+        print('スタイル空のとき')
+        # 都道府県とサイズで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Country == serchParam.country, Girls.Size == serchParam.size).order_by(desc(Girls.Store)).all()
+
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Country == serchParam.country, Girls.Size == serchParam.size).order_by(desc(Girls.id)).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
+
+    else:
+        print('全ての値がちゃんとはいっているとき')
+        # 全てのパラメーターで一致させるクエリ
+        # 一致するガールズデータを取得
+        returnGarlsData = db.query(Girls).filter(
+            Girls.Country == serchParam.country,
+            Girls.Size == serchParam.size,
+            Girls.Style == serchParam.style).order_by(desc(Girls.Store)).all()
+
+        # 一致するレポートデータを取得
+        returnReportData = db.query(
+            Girls.id, Girls.Name, Girls.Store, Reports.CharmScore, Reports.ExpertScore, Reports.Report).join(
+            Reports, Girls.id == Reports.GirlId).filter(
+            Girls.Country == serchParam.country,
+            Girls.Size == serchParam.size,
+            Girls.Style == serchParam.style).order_by(desc(Girls.id)).all()
+
+        return {"GarlsData": returnGarlsData, "ReportData": returnReportData}
 
 
 # レコメンドAPI
@@ -96,6 +213,11 @@ def postid_root(uid: useridParam, db: Session = Depends(get_db)):
 
         # NULLデータを除外して最終的な配列へ
         actDatasList = [k for k in actorDatas if k is not None]
+        # もしも4件以上のデータが入っているようなら先頭の4つまでに絞る
+        if len(actDatasList) > 4:
+            actDatasList_max = [actDatasList[i] for i in range(4)]
+            return actDatasList_max
+
         print(actDatasList)
         return actDatasList
 
