@@ -5,9 +5,14 @@ import { ServerUrl } from './api'
 import { AuthContext } from './firebase'
 
 import '../components/Pages/TopPage.css';
+import {FaStar} from "react-icons/fa";
+
+
 
 
 export const RepoApi = () => {
+
+  
 
   const [FirstValue, SetFirstValue] = useState(false)
   const currentUser = useContext(AuthContext)
@@ -158,11 +163,53 @@ export const RepoApi = () => {
       });
     };
   };
+
+
+  // 星評価用
+
+  //愛嬌
+
+    const [currentValue, setCurrentValue] = useState(0);
+    const [hoverValue, setHoverValue] = useState(undefined);
+    const stars = Array(5).fill(0)
+  
+    const handleClick = value => {
+      setCurrentValue(value)
+    }
+  
+    const handleMouseOver = newHoverValue => {
+      setHoverValue(newHoverValue)
+    };
+  
+    const handleMouseLeave = () => {
+      setHoverValue(undefined)
+    }
+
+    //パネマジ
+
+    const [currentValue2, setCurrentValue2] = useState(0);
+    const [hoverValue2, setHoverValue2] = useState(undefined);
+    const stars2 = Array(5).fill(0)
+  
+    const handleClick2 = value => {
+      setCurrentValue2(value)
+    }
+  
+    const handleMouseOver2 = newHoverValue => {
+      setHoverValue2(newHoverValue)
+    };
+  
+    const handleMouseLeave2 = () => {
+      setHoverValue2(undefined)
+    }
+  
   
   return (
     <>
     <div>
+      <div  className='serchtitle'>
       <label>都道府県</label>
+      </div>
       <div className="cp_ipselect cp_sl04">
         <select onChange={(e) => contryChange(e)}>
           <option value={0} data-address={null}>選択してください</option>
@@ -176,7 +223,9 @@ export const RepoApi = () => {
     </div>
 
     <div>
+    <div  className='serchtitle'>
       <label>店名</label>
+      </div>
       <div className="cp_ipselect cp_sl04">
         <select onChange={(e) => StoreChange(e)}>
         <option value={0} data-address={null}>選択してください</option>
@@ -190,7 +239,9 @@ export const RepoApi = () => {
     </div>
     
     <div>
+    <div  className='serchtitle'>
       <label>女の子名</label>
+       </div>
       <div className="cp_ipselect cp_sl04">
         <select onChange={(e) => GirlChange(e)}>
           <option value={0} data-address={null}>選択してください</option>
@@ -205,7 +256,7 @@ export const RepoApi = () => {
       </div>
     </div>
     
-    <div>
+    <div className='girls-img'>
     {GirlValue 
       ? <img src={GirlValue.url} width={150} height={150}></img>
       : <></> 
@@ -214,33 +265,91 @@ export const RepoApi = () => {
 
     <br></br>
     <div>
-      <label>愛嬌</label>
-      <select onChange={(e) => CharmChange(e)}>
+    <div  className='serchtitle'>
+    <label>愛嬌</label>
+      </div>
+
+      
+      <div style={styles.container}>
+                <div style={styles.stars}>
+                  {stars.map((_, index) => {
+                    return (
+                      <FaStar
+                        key={index}
+                        size={24}
+                        onClick={() => handleClick(index + 1)}
+                        onMouseOver={() => handleMouseOver(index + 1)}
+                        onMouseLeave={handleMouseLeave}
+                        color={(hoverValue || currentValue) > index ? colors.orange : colors.grey}
+                        style={{
+                          marginRight: 10,
+                          cursor: "pointer"
+                        }}
+                      />
+                    )
+                  })}
+                </div>
+            </div>
+
+
+       {/* セレクトボックス評価↓ */}
+
+      {/* <select onChange={(e) => CharmChange(e)}>
         <option value={0}>選択してください</option>
         <option value={1}>1点</option>
         <option value={2}>2点</option>
         <option value={3}>3点</option>
         <option value={4}>4点</option>
         <option value={5}>5点</option>
-      </select>
+      </select> */}
     </div>
 
     <div>
+    <div  className='serchtitle'>
       <label>パネマジ度</label>
-      <select onChange={(e)=> ExpertChange(e)}>
+      </div>
+
+      <div style={styles.container}>
+                <div style={styles.stars}>
+                  {stars.map((_, index) => {
+                    return (
+                      <FaStar
+                        key={index}
+                        size={24}
+                        onClick={() => handleClick2(index + 1)}
+                        onMouseOver={() => handleMouseOver2(index + 1)}
+                        onMouseLeave={handleMouseLeave2}
+                        color={(hoverValue2 || currentValue2) > index ? colors.orange : colors.grey}
+                        style={{
+                          marginRight: 10,
+                          cursor: "pointer"
+                        }}
+                      />
+                    )
+                  })}
+                </div>
+            </div>
+
+          {/* セレクトボックス評価↓ */}
+
+      {/* <select onChange={(e)=> ExpertChange(e)}>
         <option value={0}>選択してください</option>
         <option value={1}>1点</option>
         <option value={2}>2点</option>
         <option value={3}>3点</option>
         <option value={4}>4点</option>
         <option value={5}>5点</option>
-      </select>
+      </select> */}
     </div>
 
     <div>
-      <p>レポート内容</p>
+    <div  className='serchtitle'>
+      <label>レポート内容</label>
+      </div>
+      <div className='report-text'>
       <textarea cols="80" rows="10" ref={Report} placeholder='どんな体験だった？'>
       </textarea>
+      </div>
     </div>
 
     <div className='btn-list'>
@@ -250,3 +359,18 @@ export const RepoApi = () => {
     </>
   )
 }
+
+// 星のデザイン設定
+
+const styles = {
+  container:{
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  }
+}
+
+const colors = {
+  orange: "#FFBA5A",
+  grey: "#a9a9a9"
+};
